@@ -1,0 +1,24 @@
+name: Deployment
+
+on:
+  push:
+    tags:
+    - "v*"
+  
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name:  Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4.4.0
+      with:
+        folder: artifacts/web
+
+    - name: Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "artifacts/desktop/main/msi/TetrisMP-1.0.0.msi, artifacts/android/tetris-release.apk"
